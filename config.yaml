@@ -1,0 +1,168 @@
+variables:
+  - name: faculty_hours
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 40
+      std_dev: 3
+
+  - name: faculty_satisfaction
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 60
+      std_dev: 10
+    parents:
+      - name: faculty_hours
+        relationship_type: exponential
+        coefficients:
+          a: 60
+          b: -0.02  # Decaying exponential impact as faculty_hours increases
+
+  - name: student_satisfaction
+    type: continuous
+    distribution: Gaussian  # Changed to Gaussian
+    parameters:
+      mean: 70  # Added a mean and std_dev for Gaussian distribution
+      std_dev: 15
+    parents:
+      - name: faculty_hours
+        relationship_type: linear
+        coefficients:
+          intercept: 50
+          slope: -0.5  # Negative relationship with faculty_hours
+      - name: faculty_satisfaction
+        relationship_type: linear
+        coefficients:
+          intercept: 70
+          slope: 0.3  # Positive relationship with faculty_satisfaction
+
+  - name: research_output
+    type: mixed
+    distribution: LinearGaussian
+    parameters:
+      coefficients: [-2.0, 0.7]  # Coefficients as list of numbers
+    parents:
+      - name: faculty_hours
+        relationship_type: linear
+        coefficients:
+          intercept: 10
+          slope: 0.5  # Positive relationship with faculty_hours
+      - name: funding
+        relationship_type: linear
+        coefficients:
+          intercept: 5
+          slope: 0.3  # Positive relationship with funding
+
+  - name: funding
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 500000
+      std_dev: 100000
+    parents:
+      - name: faculty_hours
+        relationship_type: exponential
+        coefficients:
+          a: 1
+          b: 0.02  # Positive exponential relationship with faculty_hours
+      - name: student_satisfaction
+        relationship_type: linear
+        coefficients:
+          intercept: 300000
+          slope: -50000  # Negative impact on funding as student satisfaction decreases
+
+  - name: teaching_quality
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 75
+      std_dev: 15
+    parents:
+      - name: faculty_satisfaction
+        relationship_type: linear
+        coefficients:
+          intercept: 50
+          slope: 0.6  # Positive impact on teaching quality as faculty satisfaction increases
+      - name: student_satisfaction
+        relationship_type: linear
+        coefficients:
+          intercept: 45
+          slope: 0.4  # Positive impact on teaching quality as student satisfaction increases
+
+  - name: faculty_research_hours
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 30
+      std_dev: 10
+    parents:
+      - name: research_output
+        relationship_type: linear
+        coefficients:
+          intercept: 5
+          slope: 0.2  # Positive impact on research hours as research output increases
+      - name: funding
+        relationship_type: linear
+        coefficients:
+          intercept: 0
+          slope: 0.3  # Positive relationship with funding
+
+  - name: student_performance
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 80
+      std_dev: 10
+    parents:
+      - name: faculty_hours
+        relationship_type: linear
+        coefficients:
+          intercept: 60
+          slope: 0.4  # Positive relationship with faculty_hours
+      - name: teaching_quality
+        relationship_type: linear
+        coefficients:
+          intercept: 50
+          slope: 0.3  # Positive relationship with teaching_quality
+
+  - name: collaboration_index
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 0.5
+      std_dev: 0.2
+    parents:
+      - name: faculty_research_hours
+        relationship_type: exponential
+        coefficients:
+          a: 1.2
+          b: 0.15  # Exponential growth in collaboration index with increasing research hours
+      - name: student_performance
+        relationship_type: linear
+        coefficients:
+          intercept: 0.3
+          slope: 0.2  # Positive relationship with student performance
+
+  - name: department_reputation
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 70
+      std_dev: 15
+    parents:
+      - name: research_output
+        relationship_type: linear
+        coefficients:
+          intercept: 40
+          slope: 0.5  # Positive relationship with research_output
+      - name: student_performance
+        relationship_type: linear
+        coefficients:
+          intercept: 30
+          slope: 0.3  # Positive relationship with student_performance
+      - name: faculty_satisfaction
+        relationship_type: linear
+        coefficients:
+          intercept: 50
+          slope: 0.2  # Positive relationship with faculty_satisfaction

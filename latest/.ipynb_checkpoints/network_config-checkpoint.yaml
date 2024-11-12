@@ -1,0 +1,36 @@
+variables:
+  faculty_hours:
+    type: continuous
+    distribution: normal
+    parameters:
+      mean: 40
+      std_dev: 3
+  faculty_satisfaction:
+    type: continuous
+    distribution: conditional
+    conditional_on: "faculty_hours"
+    equation: "60 - 0.2 * faculty_hours"
+    std_dev: 10
+  research_output:
+    type: continuous
+    distribution: conditional
+    conditional_on: "faculty_hours, funding"
+    equation: "3 + 0.3 * faculty_hours + 0.5 * funding"
+  student_satisfaction:
+    type: continuous
+    distribution: conditional
+    conditional_on: "faculty_hours, faculty_satisfaction, course_difficulty"
+    equation: "70 - 0.5 * faculty_hours + 0.3 * faculty_satisfaction - 0.2 * course_difficulty"
+    std_dev: 15
+  funding:
+    type: continuous
+    distribution: normal
+    parameters:
+      mean: 100
+      std_dev: 20
+  course_difficulty:
+    type: continuous
+    distribution: normal
+    parameters:
+      mean: 50
+      std_dev: 20

@@ -1,0 +1,84 @@
+variables:
+  - name: faculty_hours
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 40
+      std_dev: 3
+
+  - name: faculty_satisfaction
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 60
+      std_dev: 10
+
+  - name: student_satisfaction
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 70
+      std_dev: 15
+
+  - name: research_output
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 50
+      std_dev: 12
+
+  - name: funding
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 500000
+      std_dev: 100000
+
+  - name: teaching_quality
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 75
+      std_dev: 15
+
+  - name: faculty_research_hours
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 30
+      std_dev: 10
+
+  - name: student_performance
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 80
+      std_dev: 10
+
+  - name: collaboration_index
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 0.5
+      std_dev: 0.2
+
+  - name: department_reputation
+    type: continuous
+    distribution: Gaussian
+    parameters:
+      mean: 70
+      std_dev: 15
+
+# Covariance structure: Symmetric matrix with each pair representing the covariance
+# between the respective variables (in order of the "variables" list)
+covariance_matrix:
+  - [9.0, -2.5, -1.8, 2.1, 1.3, 0.5, -1.2, 1.5, 0.4, 2.3]  # faculty_hours
+  - [-2.5, 100.0, 7.3, -0.6, 2.8, 3.4, 4.1, 1.7, -0.8, 3.9] # faculty_satisfaction
+  - [-1.8, 7.3, 225.0, 5.6, -4.5, 6.7, 2.3, 3.8, 1.0, -2.7] # student_satisfaction
+  - [2.1, -0.6, 5.6, 144.0, 3.2, -2.3, 1.9, 2.5, 0.7, 3.1]  # research_output
+  - [1.3, 2.8, -4.5, 3.2, 10000000000.0, 0.8, 2.1, -1.5, 1.9, -2.0] # funding
+  - [0.5, 3.4, 6.7, -2.3, 0.8, 225.0, 1.4, 5.7, 1.3, 2.6]   # teaching_quality
+  - [-1.2, 4.1, 2.3, 1.9, 2.1, 1.4, 100.0, 1.6, 1.8, 3.0]   # faculty_research_hours
+  - [1.5, 1.7, 3.8, 2.5, -1.5, 5.7, 1.6, 100.0, -1.3, 4.1]  # student_performance
+  - [0.4, -0.8, 1.0, 0.7, 1.9, 1.3, 1.8, -1.3, 4.0, 0.9]    # collaboration_index
+  - [2.3, 3.9, -2.7, 3.1, -2.0, 2.6, 3.0, 4.1, 0.9, 225.0]  # department_reputation

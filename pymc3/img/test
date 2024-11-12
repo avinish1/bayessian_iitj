@@ -1,0 +1,56 @@
+digraph {
+	research_output [label="research_output
+~
+Binomial" shape=ellipse]
+	faculty_satisfaction [label="faculty_satisfaction
+~
+Categorical" shape=ellipse]
+	total_hours_index [label="total_hours_index
+~
+DiscreteUniform" shape=ellipse]
+	student_satisfaction [label="student_satisfaction
+~
+Categorical" shape=ellipse]
+	teaching_hours [label="teaching_hours
+~
+Deterministic" shape=box]
+	research_hours [label="research_hours
+~
+DiscreteUniform" shape=ellipse]
+	total_hours [label="total_hours
+~
+Deterministic" shape=box]
+	funding_index [label="funding_index
+~
+DiscreteUniform" shape=ellipse]
+	course_difficulty [label="course_difficulty
+~
+DiscreteUniform" shape=ellipse]
+	success_prob [label="success_prob
+~
+Beta" shape=ellipse]
+	subgraph cluster10 {
+		faculty_satisfaction_probs [label="faculty_satisfaction_probs
+~
+Deterministic" shape=box]
+		student_satisfaction_probs [label="student_satisfaction_probs
+~
+Deterministic" shape=box]
+		label=10 labeljust=r labelloc=b style=rounded
+	}
+	funding_index -> total_hours_index
+	total_hours_index -> total_hours
+	total_hours -> research_hours
+	research_hours -> teaching_hours
+	total_hours -> teaching_hours
+	research_hours -> research_output
+	success_prob -> research_output
+	teaching_hours -> student_satisfaction
+	course_difficulty -> student_satisfaction
+	teaching_hours -> student_satisfaction_probs
+	course_difficulty -> student_satisfaction_probs
+	research_output -> faculty_satisfaction
+	student_satisfaction -> faculty_satisfaction
+	research_output -> faculty_satisfaction_probs
+	student_satisfaction -> faculty_satisfaction_probs
+}
